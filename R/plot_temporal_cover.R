@@ -1,0 +1,108 @@
+# =============================================================
+# File: plot_temporal_cover.R
+# Description: Generates and saves a plot of percent cover trends for a specified region and functional group, using data extracted from the ReefCloud Public Dashboard.
+# Author: Manuel Gonzalez-Rivero and Samuel Chan
+# Date: 2025-11-13
+# Dependencies: ggimage, ggplot2, tidyverse, scales, hrbrthemes
+# =============================================================
+
+#' Generate and Save Temporal Hard Coral Cover Plot
+#'
+#' This function creates a temporal plot of hard coral cover trends for a specified region (tier),
+#' including disturbance events (thermal stress and storms) and contributor credits. The plot is saved as a PNG file.
+#'
+#' @param tier_id Character. Unique identifier for the region/tier to plot.
+#'
+#' @return Data frame of modelled cover data for the specified region.
+#'
+#' @details
+#' The function retrieves modelled cover data and disturbance events, then generates a plot showing
+#' median hard coral cover with 95% credible intervals and disturbance icons. Data credits are annotated.
+#' Requires the following packages: ggimage, ggplot2, tidyverse, scales, hrbrthemes.
+#'
+#' @examples
+#' # Example usage:
+#' plot_temporal_cover("your_tier_id")
+
+plot_temporal_cover <- function(tier_id, cover_type = "hard coral") {
+  require(ggimage)
+  require(ggplot2)
+  require(tidyverse)
+  require(scales)
+  require(hrbrthemes)
+  
+  # Load dependent functions
+  source("R/get_regional_summary.R")
+  source("R/get_benthic_cover.R")
+  source("R/get_disturbance.R")
+  source("R/integer_breaks.R")
+  
+  # Get info and modeled cover over time for this tier_id
+  info <- get_regional_summary(tier_id)
+  xdf <- get_benthic_cover(tier_id)
+  
+  # Get disturbances for this tier id
+  
+  events <- get_disturbance(tier_id, e_type = "thermal_stress") |>
+    filter(severity > 1, percentage_total_reef > 0.05) |>
+    mutate(dist = "DHW", year = year - 0.5, icon = "_media/icons/bleaching.png") |>
+    select(year, dist, icon) |>
+    distinct() |>
+    bind_rows(
+      get_disturbance(tier_id, e_type = "storm_exposure_year") |>
+        select(year, severity, percentage_total_reef) |>
+        filter(severity > 1, percentage_total_reef > 0.05) |>
+        mutate(dist = "TC", year = year - 0.5, icon = "_media/icons/cyclone.png") |>
+        select(year, dist, icon) |>
+        distinct()
+    ) |>
+    filter(year >= min(year(xdf$date)))
+  
+  plot <- xdf |>
+    filter(type == cover_type) |>
+    mutate(year = year(date)) |>
+    ggplot() +
+    geom_pointrange(aes(x = year, y = median, ymin = low, ymax = high), size = 1, color = "black", linetype = "dashed") +
+    geom_line(aes(x = year, y = median), size = 1.5) +
+    geom_image(
+      data = events,
+      mapping = aes(x = year, y = max(xdf$high[xdf$type == cover_type]) - max(xdf$high[xdf$type == cover_type]) / 20, image = "_media/icons/down_arrow.png")
+    ) +
+    geom_image(
+      data = events,
+      mapping = aes(x = year, y = max(xdf$high[xdf$type == cover_type]), image = icon),
+      position = position_dodge(width = 1)
+    ) +
+    labs(
+      title = "Overall Hard Coral Cover Trend",
+      subtitle = "Median Cover with 95% Credible Intervals and Disturbances",
+      x = "Year",
+      y = "Cover (%)"
+    ) +
+    scale_x_continuous(breaks = integer_breaks()) +
+    ggplot2::theme_minimal() +
+    ggplot2::theme(panel.grid.major = ggplot2::element_blank(),  # Remove major grid lines
+                   panel.grid.minor = ggplot2::element_blank()   # Remove minor grid lines
+    ) #+
+  #annotate(
+  #  "text",
+  #  x = Inf,
+  # y = -Inf,
+  #  label = sprintf("Data Credits: %s", paste(info$data_contributors, collapse = ". ")),
+  #  hjust = 1.1,
+  #  vjust = -1.1,
+  #  size = 3,
+  #  color = "black"
+  #)
+  
+  ggsave(
+    plot,
+    filename = "figures/Temporal_HardCoral_Trend.png",
+    bg = "transparent", width = 12, height = 8
+  )
+  
+  return(list(
+    plot = plot,
+    df.sum = xdf
+  ))
+}
