@@ -67,7 +67,7 @@ The function *get_regional_summary* provides a summarised list of information re
 -   Site ID: A list of IDs for all the sites within this region
 -   Source: Data source or citation guide
 
-This summary of the sites found within the Tier ID with the name of the region: `r info$region_name`(@tbl-getRegionalSummary), that provide site IDs that can be fed into the different functions later. Here, we can then tidy the format using *tibble* and *kable*, and change the title texts to be proper casing.
+This summary of the sites found within the Tier ID (@tbl-getRegionalSummary), that provide site IDs that can be fed into the different functions later. Here, we can then tidy the format using *tibble* and *kable*, and change the title texts to be proper casing.
 
 ```{r}
 #| label: tbl-getRegionalSummary
