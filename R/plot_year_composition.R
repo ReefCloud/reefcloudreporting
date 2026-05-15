@@ -163,9 +163,9 @@ plot_year_composition <- function(
   year_min <- min(xdf$year, na.rm = TRUE)
   year_max <- max(xdf$year, na.rm = TRUE)
   year_label <- if (year_min == year_max) {
-    paste0("Year: ", year_min)
+    paste0(year_min)
   } else {
-    paste0("Years: ", year_min, "–", year_max)
+    paste0(year_min, "–", year_max)
   }
   
   # ---- Set fill ordering ----

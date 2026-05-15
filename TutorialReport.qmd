@@ -280,6 +280,73 @@ names(covercomparisonlr_tbl) <- names(covercomparisonlr_tbl) |>
 knitr::kable(covercomparisonlr_tbl)
 ```
 
+### Functions: get_disturbance
+
+Aside from benthic cover, there are also functions to access disturbance data using the function *get_disturbance*. This provides a detailed table of the disturbance events at a tier and for the disturbance event type (thermal_stress for thermal stresses, storm_exposure_year for storm exposure by year or storm_exposure_event for storm exposure by events). See the [ReefCloud public dashboard](https://reefcloud.ai/dashboard/ "ReefCloud Public Dashboard") for more details on how these are calculated.
+
+Here, we generate the thermal stress disturbances (@tbl-getDisturbanceTS).
+
+This includes the following:
+
+-   Tier ID: Tier ID given
+-   Tier Level: Level of the tier or site
+-   Env Type: Environmental disturbance types (thermal_stress, storm_exposure_year or storm_exposure_event)
+-   Name: Name of the disturbance event (for storm exposure only)
+-   Env Count: Number of events for that year (for year data only)
+-   Severity: Severity of the events (1 for less severe, 2 for more severe)
+-   Start Date: Start date of the event (for storm exposure events)
+-   End Date: End date of the event (for storm exposure events)
+-   Percentage Total Reef: Percentage of the total reef affected within the tier
+-   Year: Year of the event
+
+```{r}
+#| label: tbl-getDisturbanceTS
+#| tbl-cap: "Thermal Stress Disturbances in Palau"
+#| warning: false
+source("./R/get_disturbance.R")
+
+disturbancets <- get_disturbance(1705, e_type = "thermal_stress")
+
+disturbancets_tbl <- disturbancets |> 
+  dplyr::mutate(env_type  = stringr::str_to_title(env_type)) |>  
+  dplyr::select(-id, -env_id, -name, -env_count, -start_date, -end_date) |> 
+  dplyr::relocate(tier_id, tier_level, .before = env_type)
+
+disturbancets_tbl$env_type <- disturbancets_tbl$env_type |> 
+  gsub("_", " ", x = _)
+
+names(disturbancets_tbl) <- names(disturbancets_tbl) |> 
+  gsub("_", " ", x = _) |>
+  str_to_title()
+
+knitr::kable(disturbancets_tbl)
+```
+
+Similarly, we can generate the storm exposure disturbances too (@tbl-getDisturbanceSE).
+
+```{r}
+#| label: tbl-getDisturbanceSE
+#| tbl-cap: "Storm Exposure Disturbances in Palau"
+#| warning: false
+source("./R/get_disturbance.R")
+
+disturbancese <- get_disturbance(1705, e_type = "storm_exposure_year")
+
+disturbancese_tbl <- disturbancese |> 
+  dplyr::mutate(env_type  = stringr::str_to_title(env_type)) |>  
+  dplyr::select(-id, -env_id, -name, -env_count, -start_date, -end_date) |> 
+  dplyr::relocate(tier_id, tier_level, .before = env_type)
+
+disturbancese_tbl$env_type <- disturbancese_tbl$env_type |> 
+  gsub("_", " ", x = _)
+
+names(disturbancese_tbl) <- names(disturbancese_tbl) |> 
+  gsub("_", " ", x = _) |>
+  str_to_title()
+
+knitr::kable(disturbancese_tbl)
+```
+
 # Generating Report Figures
 
 The data that have been accessed through the ReefCloud API have been converted into tables previously. This is useful for presenting large amounts of data, but can be made more accessible using visualisations such as graphs. Here, we have several functions that help to create some useful visualisations of the data that may be relevant for reporting.
@@ -439,10 +506,48 @@ year_composition <- plot_year_composition(1705, depth = "none", fill_by = "group
 year_composition$plot
 ```
 
-With the differences in cover shown between 2002 and 2016, we want to see if there is a trend through time as well. We can do this using the plot_temporal_cover function that uses all the previous functions together to generate a table of mean cover through time, alongside some of the disturbances that have been tracked through time (@fig-plotHCTrend).
+### Functions: plot_annual_disturbance
+
+The function *plot_annual_disturbance* plots the disturbance severity of each year based off the disturbance type and table from *get_disturbance*. This then gives a detailed look into the percentage of reefs affected by the disturbance and the severity of these disturbances across the region.
+
+This plot gives a look into the area of reefs experiencing disturbance stress, highlighting years where disturbances may have had large potential impacts, which can then be compared to coral compositional change or trends in cover (@fig-plotAnnualDisturbanceTS).
 
 ```{r}
-#| label: fig-plotHCTrend
+#| label: fig-plotAnnualDisturbanceTS 
+#| fig-cap: "Annual thermal stress disturbance severity across Palau"
+#| warning: false
+source("./R/plot_annual_disturbance.R")
+
+annual_disturbance_TS <- plot_annual_disturbance(disturbancets)
+
+annual_disturbance_TS
+```
+
+### Functions: plot_year_disturbance
+
+The function *plot_year_disturbance* also plots the disturbance severity of one specific year based off the disturbance type and table from *get_disturbance*, defaulting to the latest year if no year is specified. This then gives a detailed look into the percentage of reefs affected by the disturbance and the severity of these disturbances across the region for that one specified year.
+
+This plot gives a look into the area of reefs experiencing different severity of disturbance stress, which can be useful for highlighting reef impacts on annual reports (@fig-plotYearDisturbanceSE).
+
+```{r}
+#| label: fig-plotYearDisturbanceSE
+#| fig-cap: "Storm exposure disturbance severity across Palau in 2014"
+#| warning: false
+source("./R/plot_year_disturbance.R")
+
+year_disturbance_SE <- plot_year_disturbance(disturbancese, year = 2014)
+
+year_disturbance_SE
+```
+
+### plotTemporalCover
+
+The function *plot_temporal_cover* combines information from a few of the previous plots into one figure. This uses a tier ID and a benthic cover to plot the annual trend, alongside the disturbance events that have happened in that year. 
+
+This figure helps to give a summary of the trend changes alongside disturbance events, and generally would work for most trends and disturbance impacts, such as hard coral cover through time against heat stress and cyclone impacts (@fig-plotTemporalCover). However, this may require interpretation if other benthic cover groups are chosen or if the disturbances are not a major impact across the whole of the region. 
+
+```{r}
+#| label: fig-plotTemporalCover
 #| fig-cap: "Trends of Hard Coral cover across the region"
 #| warning: false
 source("./R/plot_temporal_cover.R")

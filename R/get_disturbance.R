@@ -33,7 +33,7 @@ get_disturbance <- function(tier_id, e_type) {
   require(dplyr)
   require(lubridate)
 
-  url <- sprintf("https://api.reefcloud.ai/reefcloud/dashboard-api/environmental/%s?env_type=%s", 1705, "thermal_stress")
+  url <- sprintf("https://api.reefcloud.ai/reefcloud/dashboard-api/environmental/%s?env_type=%s", tier_id, e_type)
   response <- httr::GET(url)
   data <- jsonlite::fromJSON(content(response, "text", encoding = "UTF-8"))
   data <- data$data %>%

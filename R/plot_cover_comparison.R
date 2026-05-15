@@ -3,7 +3,7 @@
 # Description: Plot site-level and tier-level benthic cover change
 #              using get_cover_comparison() output
 # Author: Samuel Chan
-# Date: 2026-04-15
+# Date: 2026-05-12
 # Dependencies: ggplot2, dplyr, stringr
 # =============================================================
 
@@ -116,7 +116,7 @@ plot_cover_comparison <- function(
     ggplot2::coord_flip() +
     ggplot2::geom_hline(yintercept = 0, colour = "grey50") +
     ggplot2::scale_fill_manual(
-      values = c("TRUE" = "#2C7BB6", "FALSE" = "#D7191C"),
+      values = c("TRUE" = "#2b83ba", "FALSE" = "#d7191c"),
       guide = "none"
     ) +
     ggplot2::labs(
