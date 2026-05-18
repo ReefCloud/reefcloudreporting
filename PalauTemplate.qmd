@@ -1,7 +1,7 @@
 ---
-title: 2014 Palau Report
-date: 2015-03-01
-author: 'Samuel Chan'
+title: Palau Annual Monitoring Report - 2016
+date: 2016-12-31
+author: 'Palau International Coral Reef Center'
 
 license: "CC BY"
 crossref:
@@ -28,7 +28,7 @@ format:
 ---
 
 ::: lead
-In this vignette, we will explore how to generate a report using the functions from the **reefcloudReporting** package and the data from the ReefCloud Public Dashboard from the Palau region in the style of one of the many [Status and Trends Reports from Palau](https://drive.google.com/file/d/1JE5T6sP-E9BftM60OOziZ_G09xYaL6LO/view).
+In this vignette, we will explore how to generate a historical report using the functions from the **reefcloudReporting** package and the data from the ReefCloud Public Dashboard from the Palau region in the style of one of the many [Status and Trends Reports from Palau](https://drive.google.com/file/d/1JE5T6sP-E9BftM60OOziZ_G09xYaL6LO/view).
 :::
 
 ```{r}
@@ -48,7 +48,7 @@ Coral reefs are important ecosystems that serve as habitat and provides many eco
 
 While the reefs in Palau have been relatively resilient to the impacts of these stressors, several super-typhoons have had great impact to the reefs there. To assess the impact, long-term monitoring needs to be consistently conducted to document the changes over time and to report on the effects of conservation or management actions.
 
-Here, we look at the last monitoring year of data in 2016 to build upon older reports of past data.
+Here, we look at the current monitoring year of data in 2016.
 
 # Methods
 
@@ -110,7 +110,8 @@ source("./R/get_site_summary.R")
 sites <- get_site_summary(1705)
 
 sites_tbl <- sites[1:10,] |> 
-  st_drop_geometry()
+  st_drop_geometry() |> 
+  dplyr::select(-latitude, -longitude)
 
 names(sites_tbl) <- names(sites_tbl) |> 
   gsub("_", " ", x = _) |>
@@ -121,32 +122,44 @@ knitr::kable(sites_tbl)
 
 ## Overview
 
-Across all 42 sites both shallow and deep in 2016, we can see that the number of sites with high coral cover (>30%) is slightly less than half, while most sites had low macroalgae cover (@fig-plotDonut1, @fig-plotDonut2) 
+Across all 42 sites both shallow and deep in 2016, we can see that the number of sites with high coral cover (>30%) is slightly less than half, while most sites had low macroalgae cover (@fig-plotDonut1, @fig-plotDonut2, @fig-plotDonut3, @fig-plotDonut4) 
 
 ```{r}
 #| label: fig-plotDonut1
-#| fig-cap: "Proportion of shallow sites within different Hard Coral and Macroalgae cover bands in the region in 2016"
+#| fig-cap: "Proportion of shallow sites within different Hard Coral cover bands in the region in 2016"
 #| warning: false
 source("./R/plot_donut.R")
 
-HC_donut_plot <- plot_donut(1705, year = 2014, depth = "shallow", cover_type = "hard coral")
-
-MA_donut_plot <- plot_donut(1705, year = 2014, depth = "shallow", cover_type = "macroalgae")
-
-HC_donut_plot + MA_donut_plot + patchwork::plot_layout(ncol = 1) + patchwork::plot_annotation(tag_levels = "a")
+HC_s_donut_plot <- plot_donut(1705, year = 2016, depth = "shallow", cover_type = "hard coral")
+HC_s_donut_plot
 ```
 
 ```{r}
 #| label: fig-plotDonut2
-#| fig-cap: "Proportion of deep sites within different Hard Coral and Macroalgae cover bands in the region in 2016"
+#| fig-cap: "Proportion of shallow sites within different Macroalgae cover bands in the region in 2016"
 #| warning: false
 source("./R/plot_donut.R")
 
-HC_donut_plot2 <- plot_donut(1705, year = 2014, depth = "deep", cover_type = "hard coral")
+MA_s_donut_plot <- plot_donut(1705, year = 2016, depth = "shallow", cover_type = "macroalgae")
+MA_s_donut_plot
+```
 
-MA_donut_plot2 <- plot_donut(1705, year = 2014, depth = "deep", cover_type = "macroalgae")
+```{r}
+#| label: fig-plotDonut3
+#| fig-cap: "Proportion of deep sites within different Hard Coral cover bands in the region in 2016"
+#| warning: false
+source("./R/plot_donut.R")
 
-HC_donut_plot2 + MA_donut_plot2 + patchwork::plot_layout(ncol = 1) + patchwork::plot_annotation(tag_levels = "a")
+HC_d_donut_plot <- plot_donut(1705, year = 2016, depth = "deep", cover_type = "hard coral")
+```
+
+```{r}
+#| label: fig-plotDonut4
+#| fig-cap: "Proportion of deep sites within different Macroalgae cover bands in the region in 2016"
+#| warning: false
+source("./R/plot_donut.R")
+
+HC_d_donut_plot <- plot_donut(1705, year = 2016, depth = "deep", cover_type = "macroalgae")
 ```
 
 ## Site-level cover
@@ -159,7 +172,7 @@ Looking at the sites individually, Nikko and Taoch sites have highest cover with
 #| warning: false
 source("./R/plot_site_cover.R")
 
-HC_cover_plot <- plot_site_cover(1705, year = 2014, cover_type = "hard coral", depth = "shallow")
+HC_cover_plot <- plot_site_cover(1705, year = 2016, cover_type = "hard coral", depth = "shallow")
 
 HC_cover_plot$plot
 ```
@@ -169,7 +182,7 @@ HC_cover_plot$plot
 #| tbl-cap: "Site-level Hard Coral cover across the region"
 #| warning: false
 HC_cover_tbl <- HC_cover_plot$df.sum[1:10,] |> 
-  dplyr::select(- date, -type_code, - low, - high) |> 
+  dplyr::select(-date, -type_code, -low, -high, -latitude, -longitude) |> 
   dplyr::mutate(depth = stringr::str_to_title(depth)) |> 
   dplyr::mutate(type = stringr::str_to_title(type)) |> 
   dplyr::rename(modelled_mean = mean, modelled_median = median)
@@ -189,7 +202,7 @@ While macroalgae cover across all sites remain low, Ngelukes does stand out with
 #| warning: false
 source("./R/plot_site_cover.R")
 
-MA_cover_plot <- plot_site_cover(1705, year = 2014, cover_type = "macroalgae", depth = "shallow")
+MA_cover_plot <- plot_site_cover(1705, year = 2016, cover_type = "macroalgae", depth = "shallow")
 
 MA_cover_plot$plot
 ```
@@ -198,8 +211,8 @@ MA_cover_plot$plot
 #| label: tbl-plotMACover
 #| tbl-cap: "Site-level Macroalgae cover across the region"
 #| warning: false
-MA_cover_tbl <- MA_cover_plot$df.sum[,1:10] |> 
-  dplyr::select(-date, -type_code, -low, -high) |> 
+MA_cover_tbl <- MA_cover_plot$df.sum[1:10,] |> 
+  dplyr::select(-date, -type_code, -low, -high, -latitude, -longitude) |> 
   dplyr::mutate(depth = stringr::str_to_title(depth)) |> 
   dplyr::mutate(type = stringr::str_to_title(type)) |> 
   dplyr::rename(modelled_mean = mean, modelled_median = median)
@@ -221,7 +234,7 @@ In general, benthic composition shows much of the same story as before, but high
 #| warning: false
 source("./R/plot_site_composition.R")
 
-site_composition1 <- plot_site_composition(1705, year = 2014, depth = "shallow")
+site_composition1 <- plot_site_composition(1705, year = 2016, depth = "shallow")
 
 site_composition1$plot
 ```
@@ -236,7 +249,59 @@ site_composition2 <- plot_site_composition(1705, year = 2014, depth = "deep")
 site_composition2$plot
 ```
 
-## Temporal Trends
+## Temporal comparisons
+
+Comparing this year's monitoring data to previous survey, both Palau and most of the sites have seen cover increase, with several sites having large increase in absolute hard coral cover: Nikko (+23.648%),  Ngelukes (+22.174%), Peleliu (+19.886%), Ngemelis (+10.895%), and Ngeremlengui Patch Reefs	(+10.161%). However, several sites also show large declines in absolute hard coral cover: Nikko 1 (-19.172%), and Ngerdiluches (-13.758%). These are sites that need some management action to identify the source of the decline (@fig-plotCoverComparisonHC, @tbl-getCoverComparisonHC).
+
+```{r}
+#| label: tbl-getCoverComparisonHC
+#| tbl-cap: "Modelled benthic cover comparison of survey Sites between two years: 2014 and 2016"
+#| warning: false
+source("./R/get_cover_comparison.R")
+
+covercomparison1 <- get_cover_comparison(1705, cover_type = "hard coral", depth = "shallow", years = c(2014, 2016))
+
+covercomparison1_tbl <- covercomparison1 |> 
+  dplyr::mutate(row_type = stringr::str_to_title(row_type), 
+                depth = stringr::str_to_title(depth), 
+                cover_type = stringr::str_to_title(cover_type)) |> 
+  dplyr::select(-tier_id, -year_first, -year_last, -n_sites) |> 
+  dplyr::relocate(row_type, .before = cover_type) 
+
+names(covercomparison1_tbl) <- names(covercomparison1_tbl) |> 
+  gsub("_", " ", x = _) |>
+  stringr::str_to_title()
+
+knitr::kable(covercomparison1_tbl)
+```
+
+```{r}
+#| label: fig-plotCoverComparisonHC
+#| tbl-cap: "Modelled benthic cover comparison of survey Sites between two years: 2014 and 2016"
+#| warning: false
+source("./R/plot_cover_comparison.R")
+
+covercomparison1_plot <- plot_cover_comparison(covercomparison1, metric = "abs")
+
+covercomparison1_plot
+```
+
+The compositional data of the reefs through time also show a similar pattern (@fig-plotYearComposition). The change in hard coral cover seems to have been taken over by others in 2016, with a substantial increase. In past years, the change in hard coral cover has been taken over by turf algae instead, which generally represented a loss of space. The others category encompasses various different categories of benthic organisms and may warrant a further study to identify the changes through time. 
+
+```{r}
+#| label: fig-plotYearComposition
+#| fig-cap: "Yearly stacked composition across the tier"
+#| warning: false
+source("./R/plot_year_composition.R")
+
+year_composition <- plot_year_composition(1705, depth = "none", fill_by = "group_code")
+
+year_composition$plot
+```
+
+## Conclusion and Recommendations
+
+Looking over the data through time, we can see that hard coral cover has varied (@fig-plotHCTrend). In the current year of monitoring, we see a slight increase in coral cover, though this small increase does not match the past coral cover from 2009 and 2010 when coral cover was at its highest. Continued monitoring is needed to see if the reefs here recover back to past levels.
 
 ```{r}
 #| label: fig-plotHCTrend
@@ -251,17 +316,4 @@ HC_trend_plot$plot
 HC_trend_plot$df.sum
 ```
 
-Looking over the data through time, we can see that hard coral cover has varied (@fig-plotHCTrend). In the current year of monitoring, we see a slight increase in coral cover, though this small increase does not match the past coral cover from 2009 and 2010 when coral cover was at its highest. Continued monitoring is needed to see if the reefs here recover back to past levels.
-
-```{r}
-#| label: fig-plotYearComposition
-#| fig-cap: "Yearly stacked composition across the tier"
-#| warning: false
-source("./R/plot_year_composition.R")
-
-year_composition <- plot_year_composition(1705, depth = "none", fill_by = "group_code")
-
-year_composition$plot
-```
-
-The compositional data of the reefs through time also show a similar pattern (@fig-plotYearComposition). The change in hard coral cover seems to have been taken over by others in 2016, with a substantial increase. In past years, the change in hard coral cover has been taken over by turf algae instead, which generally represented a loss of space. The others category encompasses various different categories of benthic organisms and may warrant a further study to identify the changes through time. 
+While most sites have seen an increase in cover from the last survey, there are still substantial difference from the peak coral cover in 2009. Additionally, several sites seem to have had a large decline in cover as well. These sites will need to be further investigated for the source of the declines. Further monitoring and management action will be taken if no recovery is seen in the next survey.
