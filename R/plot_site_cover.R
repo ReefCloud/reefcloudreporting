@@ -94,7 +94,7 @@ plot_site_cover <- function(tier_id, year = NULL, cover_type = "hard coral", dep
     ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1)) +
     ggplot2::labs(
       title = paste("Coral Reef Site Condition for ", info$region_name),
-      subtitle = sprintf("Sites by descending %s cover fo reefs in Depth: %s, Year: %s", 
+      subtitle = sprintf("Sites by descending %s cover of reefs in Depth: %s, Year: %s", 
                          stringr::str_to_title(cover_type), 
                          stringr::str_to_title(depth), 
                          year)
