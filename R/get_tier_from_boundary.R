@@ -30,7 +30,7 @@
 get_tier_from_boundary <- function(tier_level = 4, bbox) {
   
   # Validate bbox using helper
-  source("R/validate_bbox.R")
+  # source("R/validate_bbox.R")
   validate_bbox(bbox)
   
   # Construct URL

@@ -1,6 +1,6 @@
 # =============================================================
 # File: get_site_summary.r
-# Description: Retrieves site summaries (longitude, latitude) for a set of site IDs from the ReefCloud API and returns a spatial data frame.
+# Description: Retrieves site summaries for a set of site IDs from the ReefCloud API and returns a spatial data frame.
 # Author: Manuel Gonzalez-Rivero and Samuel Chan
 # Date: 2025-11-13
 # Dependencies: httr, jsonlite, dplyr, sf
@@ -25,7 +25,6 @@ get_site_summary <- function(tier_id) {
   if (!"site_id" %in% names(info) || is.null(info$site_id) || length(info$site_id) == 0L) {
     stop("No sites found for the provided tier_id.")
   }
-  
 
   # Helper to safely fetch a single site
   fetch_one <- function(site_id) {

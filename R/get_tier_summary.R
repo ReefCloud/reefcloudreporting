@@ -22,7 +22,7 @@
 get_tier_summary <- function(tier_id) {
   
   # load helpers
-  source("R/get_bbox.R")
+  # source("R/get_bbox.R")
   
   # Get the tier
     url <- paste0("https://api.reefcloud.ai/reefcloud/dashboard-api/tiers/", tier_id)
