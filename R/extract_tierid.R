@@ -39,11 +39,9 @@
 #'
 #' @export
 
-library(stringi)
-
 extract_tierid <- function(
     name,
-    lookup_file = "ext/reefcloud_dashboard_tier_lookup.csv") {
+    lookup_file = "extdata/reefcloud_dashboard_tier_lookup.csv") {
 
   if (!is.character(name) || length(name) == 0L ||
       anyNA(name) || any(trimws(name) == "")) {
