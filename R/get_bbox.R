@@ -39,13 +39,14 @@
 #' @examples
 #' \dontrun{
 #' # Basic: fetch, clean, and get a small buffered bbox
-#' out <- get_clean_sites_and_bbox(tier_id = 1705, buffer_m = 10)
+#' out <- get_bbox(tier_id = 1705, buffer_m = 10)
 #' out$sites
 #' out$bbox
 #'
 #' # Supply a year to the underlying API:
-#' out <- get_clean_sites_and_bbox(tier_id = "1705", buffer_m = 10,
+#' out <- get_bbox(tier_id = "1705", buffer_m = 10,
 #'                                 return_bbox_as = "list")
+#'
 #' out$bbox  # named list xmin/ymin/xmax/ymax
 #' }
 #'
@@ -57,7 +58,7 @@ get_bbox <- function(
     return_bbox_as = c("bbox", "list", "polygon")
 ) {
   return_bbox_as <- match.arg(return_bbox_as)
-  
+
   # ---- Validate inputs ----
   if (missing(tier_id) || length(tier_id) != 1 || is.na(tier_id)) {
     stop("`tier_id` must be a single, non-NA value.", call. = FALSE)
@@ -66,7 +67,7 @@ get_bbox <- function(
   if (!is.numeric(buffer_m) || !is.finite(buffer_m) || buffer_m < 0) {
     stop("`buffer_m` must be a non-negative, finite numeric (meters).", call. = FALSE)
   }
-  
+
   # ---- Retrieve sites (sf expected) ----
   sites <- tryCatch(
     get_site_summary(tier_id = tier_id),
@@ -78,10 +79,10 @@ get_bbox <- function(
   if (nrow(sites) == 0) {
     stop("No sites returned for the specified `tier_id`.", call. = FALSE)
   }
-  
+
   # ---- Ensure WGS84 and add lon/lat ----
   sites_wgs <- if (sf::st_is_longlat(sites)) sites else sf::st_transform(sites, 4326)
-  
+
   coords <- sf::st_coordinates(sf::st_geometry(sites_wgs))
   # coords[,1] = X (lon), coords[,2] = Y (lat)
   sites_wgs <- dplyr::mutate(
@@ -89,7 +90,7 @@ get_bbox <- function(
     lon = coords[, 1],
     lat = coords[, 2]
   )
-  
+
   # ---- Arrange, drop org cols ----
   if (drop_org_cols) {
     drop_cols <- intersect(c("org_name", "org_id"), names(sites_wgs))
@@ -99,14 +100,14 @@ get_bbox <- function(
   }
   # Remove duplicates
     sites_wgs <- dplyr::distinct(sites_wgs)
-  
+
   # ---- Build buffered hull and bbox (WGS84) ----
   # Convex hull of all points
   hull <- tryCatch(
     sf::st_convex_hull(sf::st_union(sf::st_geometry(sites_wgs))),
     error = function(e) sf::st_as_sfc(sf::st_bbox(sites_wgs), crs = sf::st_crs(4326))
   )
-  
+
   # If hull has zero area (e.g., identical points), mildly expand to avoid degenerate bbox
   if (isTRUE(as.numeric(sf::st_area(hull)) == 0)) {
   # degree-based tiny nudge
@@ -119,7 +120,7 @@ get_bbox <- function(
         ymax = bb0["ymax"] + eps
       ), crs = sf::st_crs(4326)))
     }
-  
+
   # Apply requested buffer
   buffered <- tryCatch({
     if (buffer_m > 0) {
@@ -140,7 +141,7 @@ get_bbox <- function(
       hull
     }
   }, error = function(e) hull)
-  
+
   # ---- Prepare bbox return ----
   if (return_bbox_as == "polygon") {
     bbox_out <- sf::st_as_sf(buffered)
@@ -152,7 +153,7 @@ get_bbox <- function(
       bbox_out <- as.list(bb)[c("xmin", "ymin", "xmax", "ymax")]
     }
   }
-  
+
   # ---- Return ----
   list(
     sites = sites_wgs,
