@@ -16,8 +16,10 @@
 #' @return A function that takes a numeric vector and returns integer axis breaks.
 #'
 #' @examples
+#' \dontrun{
 #' scale_x_continuous(breaks = integer_breaks())
-#' 
+#' }
+#'
 #' @export
 
 integer_breaks <- function(n = 5, ...) {

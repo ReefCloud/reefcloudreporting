@@ -18,25 +18,22 @@
 #'
 #' @details
 #' The function sends a GET request to the ReefCloud dashboard API, parses the JSON response,
-#' and returns a tidy data frame. Requires the `httr`, `jsonlite`, `dplyr`, and `lubridate` packages.
+#' and returns a tidy data frame.
 #'
 #' @examples
-#' # Example usage:
-#' disturbances <- get_disturbance("your_tier_id", "thermal_stress")
+#' \dontrun{
+#' disturbances <- get_disturbance(tier_id = "1705", e_type = "thermal_stress")
 #' head(disturbances)
-#' 
+#'}
+#'
 #' @export
 
 get_disturbance <- function(tier_id, e_type) {
-  require(httr)
-  require(jsonlite)
-  require(dplyr)
-  require(lubridate)
 
   url <- sprintf("https://api.reefcloud.ai/reefcloud/dashboard-api/environmental/%s?env_type=%s", tier_id, e_type)
   response <- httr::GET(url)
   data <- jsonlite::fromJSON(content(response, "text", encoding = "UTF-8"))
-  data <- data$data %>%
-    mutate(year = year(start_date))
+  data <- data$data |>
+    dplyr::mutate(year = year(start_date))
   return(data)
 }

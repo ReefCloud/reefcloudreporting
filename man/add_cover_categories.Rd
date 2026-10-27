@@ -13,12 +13,18 @@ add_cover_categories(
 )
 }
 \arguments{
-\item{df}{A data frame containing a numeric column to classify (e.g., \code{low}, \code{mean}, \code{median}, \code{high}).}
+\item{df}{A data frame containing a numeric column to classify.}
 
-\item{column}{Character. The name of the column to classify. Default \code{"median"}.}
+\item{column}{Character. The name of the column to classify.}
 
-\item{cat_labels}{Character vector of length 4 defining category codes for the ranges, in ascending order
-(lowest to highest). Default \code{c("D", "C", "B", "A")}.}
+\item{breaks}{Numeric vector of length 3 giving the lower bounds
+for the second, third and fourth ranges respectively.}
+
+\item{prop_labels}{Character vector of length 4 defining the labels
+for the ranges, ordered from lowest to highest.}
+
+\item{cat_labels}{Character vector of length 4 defining category codes
+for the ranges, ordered from lowest to highest.}
 }
 \value{
 The input data frame with two additional ordered factor columns:
@@ -38,7 +44,8 @@ Classifies benthic cover values from a specified numeric column into:
 
 }
 \examples{
-df <- tibble::tibble(median = c(NA, 5, 10, 15, 30, 35, 50, 55, 100))
+\dontrun{
+df <- data.frame(median = c(NA, 5, 10, 15, 30, 35, 50, 55, 100))
 add_cover_categories(df, column = "median")
 
 # Custom breaks and labels
@@ -48,5 +55,6 @@ add_cover_categories(
   prop_labels = c("0 - 10\%", "10 - 25\%", "25 - 40\%", "40 - 100\%"),
   cat_labels  = c("D", "C", "B", "A")
 )
+}
 
 }

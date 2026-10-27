@@ -14,31 +14,31 @@
 #' @param bbox A named list or vector containing bounding box coordinates.
 #'
 #' @return An `sf` object representing the tier boundaries.
-#' 
+#'
 #' @details
 #' The function gets all tier ids for a specified tier level and bounding box using the ReefCloud API.
 #' Tier levels defaults to 4 (region) but can be from 2 (country) to 6 (site).
-#' 
+#'
 #' @examples
-#' # Example usage:
+#' \dontrun{
 #' bbox <- list(xmin = 142, ymin = -20, xmax = 146, ymax = -18)
 #' tiers_sf <- get_tier_from_boundary(tier_level = 4, bbox = bbox)
 #' print(tiers_sf)
+#' }
 #'
 #' @export
 
 get_tier_from_boundary <- function(tier_level = 4, bbox) {
-  
+
   # Validate bbox using helper
-  # source("R/validate_bbox.R")
   validate_bbox(bbox)
-  
+
   # Construct URL
   url <- sprintf(
     "https://api.reefcloud.ai/reefcloud/dashboard-api/tiers?tier_level=%s&xmin=%s&ymin=%s&xmax=%s&ymax=%s",
     tier_level, bbox$xmin, bbox$ymin, bbox$xmax, bbox$ymax
   )
-  
+
   # Read spatial data
   boundary <- tryCatch(
     sf::st_read(url, quiet = TRUE),
@@ -46,6 +46,6 @@ get_tier_from_boundary <- function(tier_level = 4, bbox) {
       stop("Failed to retrieve data from ReefCloud API: ", e$message)
     }
   )
-  
+
   return(boundary)
 }

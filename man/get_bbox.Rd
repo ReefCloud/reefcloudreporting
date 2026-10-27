@@ -49,13 +49,14 @@ minimal expansion is applied when the hull area is zero.
 \examples{
 \dontrun{
 # Basic: fetch, clean, and get a small buffered bbox
-out <- get_clean_sites_and_bbox(tier_id = 1705, buffer_m = 10)
+out <- get_bbox(tier_id = 1705, buffer_m = 10)
 out$sites
 out$bbox
 
 # Supply a year to the underlying API:
-out <- get_clean_sites_and_bbox(tier_id = "1705", buffer_m = 10,
+out <- get_bbox(tier_id = "1705", buffer_m = 10,
                                 return_bbox_as = "list")
+
 out$bbox  # named list xmin/ymin/xmax/ymax
 }
 

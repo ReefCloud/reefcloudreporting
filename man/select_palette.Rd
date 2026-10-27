@@ -21,10 +21,12 @@ Convenience helper to retrieve a named palette vector for use with
 \code{cover_prop} or \code{cover_cat}.
 }
 \examples{
+\dontrun{
 select_palette("hc", use = "prop")
 
 # Helper to pick palette by domain ('prop' or 'cat') and group ('hc', 'ma', 'sc')
 ggplot(df_prop, aes(x = cover_prop, y = value, fill = cover_prop)) +
   geom_col() +
-  scale_fill_manual(values = select_palette("hc", use = "prop")) +
+  scale_fill_manual(values = select_palette("hc", use = "prop"))
+  }
 }

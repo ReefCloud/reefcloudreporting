@@ -22,15 +22,18 @@
 #'   \item \code{"50 - 100%"} → \code{A}
 #' }
 #'
-#' @param df A data frame containing a numeric column to classify (e.g., \code{low}, \code{mean}, \code{median}, \code{high}).
-#' @param column Character. The name of the column to classify. Default \code{"median"}.
-#' @param breaks Numeric vector of length 3 giving the lower bounds for the 2nd, 3rd, and 4th ranges respectively,
-#'   in ascending order. Default \code{c(10, 30, 50)} results in:
-#'   \code{"0 - 10%"}, \code{"10 - 30%"}, \code{"30 - 50%"}, \code{"50 - 100%"}.
-#' @param prop_labels Character vector of length 4 defining the labels for the ranges, in ascending order
-#'   (lowest to highest). Default \code{c("0 - 10%", "10 - 30%", "30 - 50%", "50 - 100%")}.
-#' @param cat_labels Character vector of length 4 defining category codes for the ranges, in ascending order
-#'   (lowest to highest). Default \code{c("D", "C", "B", "A")}.
+#' @param df A data frame containing a numeric column to classify.
+#'
+#' @param column Character. The name of the column to classify.
+#'
+#' @param breaks Numeric vector of length 3 giving the lower bounds
+#' for the second, third and fourth ranges respectively.
+#'
+#' @param prop_labels Character vector of length 4 defining the labels
+#' for the ranges, ordered from lowest to highest.
+#'
+#' @param cat_labels Character vector of length 4 defining category codes
+#' for the ranges, ordered from lowest to highest.
 #'
 #' @return The input data frame with two additional ordered factor columns:
 #' \itemize{
@@ -39,17 +42,23 @@
 #' }
 #'
 #' @details
-#' - Missing values in the metric column propagate as \code{NA} in both \code{cover_prop} and \code{cover_cat}.
-#' - Boundary handling:
-#'   \itemize{
-#'     \item First bin: \code{[0, b1)} — values strictly less than \code{b1} (e.g., \code{< 10}).
-#'     \item Middle bins: \code{[b1, b2)} and \code{[b2, b3)} — lower bound inclusive, upper bound exclusive.
-#'     \item Final bin: \code{[b3, 100]} — lower bound inclusive; upper bound inclusive to capture \code{100}.
-#'   }
-#' - Factor levels are set to descending order (\code{rev(prop_labels)} and \code{rev(cat_labels)}) for plotting convenience.
+#' Missing values in the metric column propagate as \code{NA}
+#' in both \code{cover_prop} and \code{cover_cat}.
+#'
+#' Boundary handling:
+#' \itemize{
+#'   \item First bin: \code{[0, b1)}
+#'   \item Middle bins: \code{[b1, b2)} and \code{[b2, b3)}
+#'   \item Final bin: \code{[b3, 100]}
+#' }
+#'
+#' Factor levels are set to descending order using
+#' \code{rev(prop_labels)} and \code{rev(cat_labels)}
+#' for plotting convenience.
 #'
 #' @examples
-#' df <- tibble::tibble(median = c(NA, 5, 10, 15, 30, 35, 50, 55, 100))
+#' \dontrun{
+#' df <- data.frame(median = c(NA, 5, 10, 15, 30, 35, 50, 55, 100))
 #' add_cover_categories(df, column = "median")
 #'
 #' # Custom breaks and labels
@@ -59,6 +68,7 @@
 #'   prop_labels = c("0 - 10%", "10 - 25%", "25 - 40%", "40 - 100%"),
 #'   cat_labels  = c("D", "C", "B", "A")
 #' )
+#' }
 #'
 #' @export
 #'
@@ -93,13 +103,13 @@ add_cover_categories <- function(
   if (!is.character(cat_labels) || length(cat_labels) != 4) {
     stop("`cat_labels` must be a character vector of length 4, ascending from lowest to highest (lowest first).")
   }
-  
+
   # Sort breaks to ensure ascending thresholds (lowest -> highest)
   b  <- sort(breaks)
   b1 <- b[1]  # lower bound for 2nd range
   b2 <- b[2]  # lower bound for 3rd range
   b3 <- b[3]  # lower bound for 4th (top) range
-  
+
   # ---- Compute range-based categories; preserve NAs ----
   df <- dplyr::mutate(
     df,
@@ -118,10 +128,10 @@ add_cover_categories <- function(
       .data[[column]] >= b3                        ~ cat_labels[4]   # A (highest)
     )
   )
-  
+
   # ---- Convert to ordered factors (descending for plotting convenience) ----
   df$cover_prop <- factor(df$cover_prop, levels = rev(prop_labels), ordered = TRUE)
   df$cover_cat  <- factor(df$cover_cat,  levels = rev(cat_labels),  ordered = TRUE)
-  
+
   return(df)
 }

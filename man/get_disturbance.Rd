@@ -20,11 +20,12 @@ Returns a data frame with disturbance details and the corresponding year.
 }
 \details{
 The function sends a GET request to the ReefCloud dashboard API, parses the JSON response,
-and returns a tidy data frame. Requires the \code{httr}, \code{jsonlite}, \code{dplyr}, and \code{lubridate} packages.
+and returns a tidy data frame.
 }
 \examples{
-# Example usage:
-disturbances <- get_disturbance("your_tier_id", "thermal_stress")
+\dontrun{
+disturbances <- get_disturbance(tier_id = "1705", e_type = "thermal_stress")
 head(disturbances)
+}
 
 }

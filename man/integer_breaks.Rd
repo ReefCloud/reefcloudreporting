@@ -18,6 +18,8 @@ A function that takes a numeric vector and returns integer axis breaks.
 This helper function returns a function that generates integer breaks for ggplot2 axes using \code{pretty()} and \code{floor()}.
 }
 \examples{
+\dontrun{
 scale_x_continuous(breaks = integer_breaks())
+}
 
 }

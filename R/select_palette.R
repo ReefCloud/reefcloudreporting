@@ -18,18 +18,20 @@
 #'   [ggplot2::scale_fill_manual()] or [ggplot2::scale_color_manual()].
 #'
 #' @examples
+#' \dontrun{
 #' select_palette("hc", use = "prop")
-#' 
+#'
 #' # Helper to pick palette by domain ('prop' or 'cat') and group ('hc', 'ma', 'sc')
 #' ggplot(df_prop, aes(x = cover_prop, y = value, fill = cover_prop)) +
 #'   geom_col() +
-#'   scale_fill_manual(values = select_palette("hc", use = "prop")) +
+#'   scale_fill_manual(values = select_palette("hc", use = "prop"))
+#'   }
 #' @export select_palette
 
 select_palette <- function(group = c("hc", "ma", "sc"), use = c("prop", "cat")) {
-  
+
   source("R/load_plot_palette.R")
-  
+
   group <- match.arg(group)
   use   <- match.arg(use)
   switch(
