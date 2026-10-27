@@ -1,6 +1,7 @@
 # Get Cleaned Sites and a Buffered WGS84 Bounding Box for a Tier
 
-Retrieves sites via [`get_site_summary()`](get_site_summary.md),
+Retrieves sites via
+[`get_site_summary()`](https://reefcloud.github.io/reefcloudreporting/reference/get_site_summary.md),
 extracts longitude/latitude from geometry, arranges and de-duplicates
 records, optionally drops organisation fields, and computes a WGS84
 (`EPSG:4326`) bounding box using a geodesic buffer.

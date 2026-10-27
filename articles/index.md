@@ -2,5 +2,6 @@
 
 ### All vignettes
 
-- [Create maps of data location](maps.md):
-- [Guidelines](reefcloudreporting.md):
+- [Create maps of data
+  location](https://reefcloud.github.io/reefcloudreporting/articles/maps.md):
+- [Guidelines](https://reefcloud.github.io/reefcloudreporting/articles/reefcloudreporting.md):
