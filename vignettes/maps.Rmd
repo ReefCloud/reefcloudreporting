@@ -1,0 +1,47 @@
+---
+title: "Create maps of data location"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting started with reefcloudreporting}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Setting up
+
+```{r setup, message = FALSE, warning = FALSE, eval=FALSE}
+# Load packages
+library(reefcloudreporting)
+library(sf)
+library(ggplot2)
+library(dplyr)
+library(purrr)
+library(stringi)
+```
+
+## 1. Generate tiers id 
+
+```{r extract-tierid, message = FALSE, warning = FALSE, eval=FALSE}
+tierids <- extract_tierid(c("Palau", "Koror"))
+```
+
+## 2. Extract bounding box and site locations
+
+```{r bbox, message = FALSE, warning = FALSE, eval=FALSE}
+bboxes <- purrr::map(tierids, function(ids) {
+  purrr::map(ids, get_bbox)
+})
+```
+
+## 4. Create the map 
+
+```{r map, message = FALSE, warning = FALSE, eval=FALSE}
+
+```
