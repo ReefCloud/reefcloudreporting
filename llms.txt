@@ -94,3 +94,9 @@ from the respective data providers.
   group and domain
 - [`validate_bbox()`](validate_bbox.md) : Validate bounding box input
 
+# Articles
+
+### All vignettes
+
+- [Create maps of data location](maps.md):
+- [Guidelines](reefcloudreporting.md):
