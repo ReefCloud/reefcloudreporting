@@ -1,5 +1,5 @@
 ---
-title: "Guidelines"
+title: "Guideline"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Getting started with reefcloudreporting}
