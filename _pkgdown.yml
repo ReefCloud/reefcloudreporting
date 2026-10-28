@@ -1,4 +1,4 @@
-url: https://reefcloud.github.io/reefcloudreporting
+url: https://reefcloud.github.io/reefcloudreporting/
 
 template:
   bootstrap: 5
@@ -15,12 +15,4 @@ template:
 #  includes:
 #    in_header:
 #      - '<link rel="icon" type="image/png" href="synthos_logo_2.png">' #add rc logo when ready
-navbar:
-  title: mbg
-  structure:
-    left: [home, intro, vignettes]
-    right: [search, reference, github]
-  components:
-    home:
-      text: Home
-      href: index.html
+
