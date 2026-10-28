@@ -27,12 +27,10 @@ library(sf)
 library(ggplot2)
 library(dplyr)
 library(purrr)
-library(stringi)
-library(ggrepel)
 library(ggpubr)
 ```
 
-## 1. Generate tiers id 
+## 1. Generate `tierids` 
 
 ```{r extract-tierid, message = FALSE, warning = FALSE, eval=FALSE}
 # Named by the geographic name passed in, so it can label each map later
@@ -99,11 +97,11 @@ purrr::iwalk(maps, function(map, place_name) {
 ```
 
 <figure style="text-align: center">
-  <img src="figures/Palau.png" width="80%">
+  <img src="figures/Palau.png" width="100%">
   <figcaption>Figure 1: Example map showing the spatial distribution of monitoring locations in Palau. </figcaption>
 </figure>
 
 <figure style="text-align: center">
-  <img src="figures/Koror.png" width="80%">
+  <img src="figures/Koror.png" width="70%">
   <figcaption>Figure 2. Example map showing the spatial distribution of monitoring locations in the Koror subregion of Palau. </figcaption>
 </figure>
