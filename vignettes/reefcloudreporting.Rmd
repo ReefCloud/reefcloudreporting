@@ -6,3 +6,16 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+
+The ReefCloud reporting R package provides a collection of functions to extract and visualize information from the [ReefCloud Public Dashboard] (https://reefcloud.ai/dashboard/) and visualize them.
+
+The tutorials provide code examples and detailed explanations to help users reproduce the visualisations.
+
+## Setting up
+
+The first step is to install the R package on your local machine by running the following code:
+
+```{r setup, message = FALSE, warning = FALSE, eval=FALSE}
+remotes::install_github("ReefCloud/reefcloudreporting")
+```
+
