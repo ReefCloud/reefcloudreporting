@@ -16,3 +16,23 @@ template:
 #    in_header:
 #      - '<link rel="icon" type="image/png" href="synthos_logo_2.png">' #add rc logo when ready
 
+navbar:
+  title: mbg
+  structure:
+    left: [home, intro, vignettes]
+    right: [search, reference, github]
+  components:
+    home:
+      text: Home
+      href: index.html
+    vignettes:
+      text: Tutorials
+      menu:
+      - text: Select areas of interest
+        href: articles/select_area.html
+      - text: Create maps
+        href: articles/maps.html
+      - text: Explore temporal trends
+        href: articles/trends.html
+      - text: Explore community composition
+        href: articles/composition.html

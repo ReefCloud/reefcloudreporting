@@ -1,5 +1,5 @@
 ---
-title: "Create maps of monitoring locations"
+title: "Create maps"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Getting started with reefcloudreporting}

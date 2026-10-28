@@ -6,7 +6,7 @@
 \usage{
 extract_tierid(
   name,
-  lookup_file = "extdata/reefcloud_dashboard_tier_lookup.csv"
+  lookup_file = "../extdata/reefcloud_dashboard_tier_lookup.csv"
 )
 }
 \arguments{
