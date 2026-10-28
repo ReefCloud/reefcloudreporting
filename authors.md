@@ -6,12 +6,17 @@
 
 ## Citation
 
-Last F (2026). *reefcloudreporting: What the Package Does (One Line,
-Title Case)*. R package version 0.0.0.9000.
+Source:
+[`DESCRIPTION`](https://github.com/ReefCloud/reefcloudreporting/blob/main/DESCRIPTION)
+
+Last F (2026). *reefcloudreporting: ReefCloud Functions for Reporting*.
+R package version 0.0.0.9000,
+<https://reefcloud.github.io/reefcloudreporting/>.
 
     @Manual{,
-      title = {reefcloudreporting: What the Package Does (One Line, Title Case)},
+      title = {reefcloudreporting: ReefCloud Functions for Reporting},
       author = {First Last},
       year = {2026},
       note = {R package version 0.0.0.9000},
+      url = {https://reefcloud.github.io/reefcloudreporting/},
     }
