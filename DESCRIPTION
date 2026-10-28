@@ -1,23 +1,29 @@
 Package: reefcloudreporting
 Title: ReefCloud Functions for Reporting
-Version: 0.0.0.9000
+Version: 1.0.0
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+    c(person("Samuel", "Chan", , "s.chan@aims.gov.au", role = c("aut", "cre")),
+      person("Julie", "Vercelloni", , "j.vercelloni@aims.gov.au", role = c("aut")),
+      person("Manu", "Gonzalez-Rivero", , "M.GonzalezRivero@aims.gov.au", role = c("aut")))
+Description: A collection of functions to extract and visualize information from the ReefCloud Public Dashboard.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Imports: 
     dplyr,
+    ggplot2,
+    grid,
     httr,
     jsonlite,
     lubridate,
     lwgeom,
     purrr,
+    readr,
     rlang,
     rsvg,
     sf,
+    stringi,
     tidyr
 Suggests: 
     testthat (>= 3.0.0)

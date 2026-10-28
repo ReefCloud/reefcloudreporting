@@ -22,7 +22,7 @@ Maps are created and saved in the `figures` folder.
 
 ```{r setup, message = FALSE, warning = FALSE, eval=FALSE}
 # Load packages
-library(reefcloudreporting) # remotes::install_github("ReefCloud/reefcloudreporting")
+library(reefcloudreporting) # remotes::install_github("ReefCloud/reefcloudreporting", force = TRUE)
 library(sf)
 library(ggplot2)
 library(dplyr)
@@ -52,9 +52,8 @@ bboxes <- purrr::map(tierids, function(ids) {
 ## 4. Create the map 
 
 ```{r map, message = FALSE, warning = FALSE, eval=FALSE}
-
 # Unzip folder containing the shapefile
-unzip("../ext/TropicalCoralReefsOfTheWorld.zip", exdir = "../extdata")
+unzip("../extdata/TropicalCoralReefsOfTheWorld.zip", exdir = "../extdata")
 
 # Read reef shapefile
 reef_shp <- st_read("../extdata/reef_500_poly.shp", quiet = TRUE) %>%
