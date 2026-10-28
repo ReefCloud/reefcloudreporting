@@ -1,8 +1,19 @@
-# ReportTemplates
+# reefcloudreporting
 
 A collection of functions to call upon the ReefCloud API to access the
-ReefCloud Public Dashboard data (<https://reefcloud.ai/dashboard/>) for
-generating reporting templates.
+ReefCloud Public Dashboard data for generating figures for use in
+reporting.
+
+## Installation
+
+You can install the development version of reefcloudreporting from
+[GitHub](https://github.com/ReefCloud/reefcloudreporting) with:
+
+``` r
+
+# install.packages("pak")
+pak::pak("ReefCloud/reefcloudreporting")
+```
 
 ## Guidelines
 
@@ -30,30 +41,9 @@ designed to speed up reporting with ReefCloud data. Many of these
 functions are wrapped around the ggplot2 package to make plots and can
 be created on your own with ggplot as well.
 
-### Reporting templates
+### Vignettes
 
-These are templates designed to take input from the API functions, pass
-them through to the plotting functions to get figures usable tailored
-for a regular report template. These draft templates can then be added
-on to, to be made into regular reports for these monitoring data.
-
-### Misc functions
-
-Additional functions that do not directly relate to the API or plots are
-located here. These are functions that serve more niche purposes in
-changing the forms of data or converting necessary data to formats for
-use with the other functions available.
-
-## Use cases
-
-### Palau International Coral Reef Center Long-term Monitoring Report
-
-## Recommendations
-
-These functions call on the ReefCloud API using publicly available
-summarised data from the ReefCloud Public Dashboard. Data presented on
-the dashboard have undergone quality assurance checks based on machine
-learning metrics as well as general data validation by the project
-owners before they are presented on the public dashboard, but
-interpretation of the results should come with caution with guidance
-from the respective data providers.
+These are documentation and tutorials designed to guide users into
+developing the steps or codes necessary to produce common data and
+figures from the [ReefCloud public
+dashboard](https://reefcloud.ai/dashboard/).

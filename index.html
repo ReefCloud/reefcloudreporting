@@ -50,9 +50,19 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="reporttemplates">ReportTemplates<a class="anchor" aria-label="anchor" href="#reporttemplates"></a>
+<div class="page-header"><h1 id="reefcloudreporting">reefcloudreporting<a class="anchor" aria-label="anchor" href="#reefcloudreporting"></a>
 </h1></div>
-<p>A collection of functions to call upon the ReefCloud API to access the ReefCloud Public Dashboard data (<a href="https://reefcloud.ai/dashboard/" class="external-link uri">https://reefcloud.ai/dashboard/</a>) for generating reporting templates.</p>
+<!-- badges: start -->
+<!-- badges: end -->
+<p>A collection of functions to call upon the ReefCloud API to access the ReefCloud Public Dashboard data for generating figures for use in reporting.</p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>You can install the development version of reefcloudreporting from <a href="https://github.com/ReefCloud/reefcloudreporting" class="external-link">GitHub</a> with:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"ReefCloud/reefcloudreporting"</span><span class="op">)</span></span></code></pre></div>
+</div>
 <div class="section level2">
 <h2 id="guidelines">Guidelines<a class="anchor" aria-label="anchor" href="#guidelines"></a>
 </h2>
@@ -63,28 +73,10 @@
 <p>These are functions that call upon the ReefCloud API directly, to access data that are made publicly available by the different project owners. Many of these functions use the Tiers defined by reef regions or sites at the most specific level and give aggregated information based on modelled data as compared to raw individual data (<a href="https://docs.reefcloud.ai/get-results/public-dashboard" class="external-link uri">https://docs.reefcloud.ai/get-results/public-dashboard</a>). Other functions that use the data from the API functions to create standard plots that are commonly used to in regular reporting for different organisations, made in partnership with these organisations. The idea here is that these functions can be called within the framework of a Quarto markdown file within the <em>Reporting templates</em> section to generate a relatively automated skeleton of a report that can then be filled with more information to explain the status and trends. This is designed to speed up reporting with ReefCloud data. Many of these functions are wrapped around the ggplot2 package to make plots and can be created on your own with ggplot as well.</p>
 </div>
 <div class="section level3">
-<h3 id="reporting-templates">Reporting templates<a class="anchor" aria-label="anchor" href="#reporting-templates"></a>
+<h3 id="vignettes">Vignettes<a class="anchor" aria-label="anchor" href="#vignettes"></a>
 </h3>
-<p>These are templates designed to take input from the API functions, pass them through to the plotting functions to get figures usable tailored for a regular report template. These draft templates can then be added on to, to be made into regular reports for these monitoring data.</p>
+<p>These are documentation and tutorials designed to guide users into developing the steps or codes necessary to produce common data and figures from the <a href="https://reefcloud.ai/dashboard/" class="external-link">ReefCloud public dashboard</a>.</p>
 </div>
-<div class="section level3">
-<h3 id="misc-functions">Misc functions<a class="anchor" aria-label="anchor" href="#misc-functions"></a>
-</h3>
-<p>Additional functions that do not directly relate to the API or plots are located here. These are functions that serve more niche purposes in changing the forms of data or converting necessary data to formats for use with the other functions available.</p>
-</div>
-</div>
-<div class="section level2">
-<h2 id="use-cases">Use cases<a class="anchor" aria-label="anchor" href="#use-cases"></a>
-</h2>
-<div class="section level3">
-<h3 id="palau-international-coral-reef-center-long-term-monitoring-report">Palau International Coral Reef Center Long-term Monitoring Report<a class="anchor" aria-label="anchor" href="#palau-international-coral-reef-center-long-term-monitoring-report"></a>
-</h3>
-</div>
-</div>
-<div class="section level2">
-<h2 id="recommendations">Recommendations<a class="anchor" aria-label="anchor" href="#recommendations"></a>
-</h2>
-<p>These functions call on the ReefCloud API using publicly available summarised data from the ReefCloud Public Dashboard. Data presented on the dashboard have undergone quality assurance checks based on machine learning metrics as well as general data validation by the project owners before they are presented on the public dashboard, but interpretation of the results should come with caution with guidance from the respective data providers.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
