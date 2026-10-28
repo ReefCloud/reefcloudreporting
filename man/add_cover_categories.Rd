@@ -41,7 +41,27 @@ Classifies benthic cover values from a specified numeric column into:
 }
 }
 \details{
+Default ranges and labels:
+\itemize{
+\item \code{"0 - 10\%"}  → \code{D}
+\item \code{"10 - 30\%"} → \code{C}
+\item \code{"30 - 50\%"} → \code{B}
+\item \code{"50 - 100\%"} → \code{A}
+}
 
+Missing values in the metric column propagate as \code{NA}
+in both \code{cover_prop} and \code{cover_cat}.
+
+Boundary handling:
+\itemize{
+\item First bin: \verb{[0, b1]}
+\item Middle bins: \verb{[b1, b2]} and \verb{[b2, b3]}
+\item Final bin: \verb{[b3, 100]}
+}
+
+Factor levels are set to descending order using
+\code{rev(prop_labels)} and \code{rev(cat_labels)}
+for plotting convenience.
 }
 \examples{
 \dontrun{

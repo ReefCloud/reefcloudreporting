@@ -16,10 +16,10 @@
 #'
 #' Default ranges and labels:
 #' \itemize{
-#'   \item \code{"0 - 10%"}  → \code{D}
-#'   \item \code{"10 - 30%"} → \code{C}
-#'   \item \code{"30 - 50%"} → \code{B}
-#'   \item \code{"50 - 100%"} → \code{A}
+#'   \item `"0 - 10%"`  → \code{D}
+#'   \item `"10 - 30%"` → \code{C}
+#'   \item `"30 - 50%"` → \code{B}
+#'   \item `"50 - 100%"` → \code{A}
 #' }
 #'
 #' @param df A data frame containing a numeric column to classify.
@@ -47,9 +47,9 @@
 #'
 #' Boundary handling:
 #' \itemize{
-#'   \item First bin: \code{[0, b1)}
-#'   \item Middle bins: \code{[b1, b2)} and \code{[b2, b3)}
-#'   \item Final bin: \code{[b3, 100]}
+#'   \item First bin: `[0, b1]`
+#'   \item Middle bins: `[b1, b2]` and `[b2, b3]`
+#'   \item Final bin: `[b3, 100]`
 #' }
 #'
 #' Factor levels are set to descending order using
