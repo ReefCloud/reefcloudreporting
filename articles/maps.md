@@ -1,12 +1,20 @@
-# Create maps of data location
+# Create maps of monitoring locations
+
+Maps showing the spatial distribution of monitoring locations can be
+generated using the code below. The first step is to specify the
+country, region and/or subregion of interest, using the place names
+provided in the ReefCloud online dashboard. In this example, we select
+`Palau` and its `Koror` subregion using
+`place_names <- c("Palau", "Koror")`.
+
+Maps are created and saved in the `figures` folder.
 
 ## Setting up
 
 ``` r
 
 # Load packages
-remotes::install_github("ReefCloud/reefcloudreporting")
-library(reefcloudreporting)
+library(reefcloudreporting) # remotes::install_github("ReefCloud/reefcloudreporting")
 library(sf)
 library(ggplot2)
 library(dplyr)
@@ -89,7 +97,7 @@ purrr::iwalk(maps, function(map, place_name) {
 ![](figures/Palau.png)
 
 Figure 1: Example map showing the spatial distribution of monitoring
-data in Palau.
+locations in Palau.
 
 ![](figures/Koror.png)
 
