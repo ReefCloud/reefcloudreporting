@@ -2,3 +2,25 @@ url: https://reefcloud.github.io/reefcloudreporting
 
 template:
   bootstrap: 5
+  bootswatch: simplex
+  theme: arrow-light
+  math-rendering: katex
+  bslib:
+    base_font: {google: "Figtree"}
+    heading_font: {google: "Figtree"}
+    bg: '#ffffff'
+    fg: '#171717'
+    primary: '#F36E21'
+    secondary: '#058040'
+#  includes:
+#    in_header:
+#      - '<link rel="icon" type="image/png" href="synthos_logo_2.png">' #add rc logo when ready
+navbar:
+  title: mbg
+  structure:
+    left: [home, intro, vignettes]
+    right: [search, reference, github]
+  components:
+    home:
+      text: Home
+      href: index.html
