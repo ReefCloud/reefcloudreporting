@@ -94,9 +94,18 @@ for the ranges, ordered from lowest to highest.</p></dd>
 </ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-
-
-
+    <p>Default ranges and labels:</p><ul><li><p><code>"0 - 10%"</code>  → <code>D</code></p></li>
+<li><p><code>"10 - 30%"</code> → <code>C</code></p></li>
+<li><p><code>"30 - 50%"</code> → <code>B</code></p></li>
+<li><p><code>"50 - 100%"</code> → <code>A</code></p></li>
+</ul><p>Missing values in the metric column propagate as <code>NA</code>
+in both <code>cover_prop</code> and <code>cover_cat</code>.</p>
+<p>Boundary handling:</p><ul><li><p>First bin: <code>[0, b1]</code></p></li>
+<li><p>Middle bins: <code>[b1, b2]</code> and <code>[b2, b3]</code></p></li>
+<li><p>Final bin: <code>[b3, 100]</code></p></li>
+</ul><p>Factor levels are set to descending order using
+<code>rev(prop_labels)</code> and <code>rev(cat_labels)</code>
+for plotting convenience.</p>
     </div>
 
     <div class="section level2">

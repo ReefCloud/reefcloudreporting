@@ -56,6 +56,30 @@ The input data frame with two additional ordered factor columns:
 
 ## Details
 
+Default ranges and labels:
+
+- `"0 - 10%"` → `D`
+
+- `"10 - 30%"` → `C`
+
+- `"30 - 50%"` → `B`
+
+- `"50 - 100%"` → `A`
+
+Missing values in the metric column propagate as `NA` in both
+`cover_prop` and `cover_cat`.
+
+Boundary handling:
+
+- First bin: `[0, b1]`
+
+- Middle bins: `[b1, b2]` and `[b2, b3]`
+
+- Final bin: `[b3, 100]`
+
+Factor levels are set to descending order using `rev(prop_labels)` and
+`rev(cat_labels)` for plotting convenience.
+
 ## Examples
 
 ``` r

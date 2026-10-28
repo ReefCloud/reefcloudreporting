@@ -74,6 +74,8 @@ from the respective data providers.
   [`group.pal`](https://reefcloud.github.io/reefcloudreporting/reference/benthic_palettes.md)
   [`groupcode.pal`](https://reefcloud.github.io/reefcloudreporting/reference/benthic_palettes.md)
   : Benthic cover colour palettes
+- [`extract_tierid()`](https://reefcloud.github.io/reefcloudreporting/reference/extract_tierid.md)
+  : Extract ReefCloud tier IDs by geographic name
 - [`get_bbox()`](https://reefcloud.github.io/reefcloudreporting/reference/get_bbox.md)
   : Get Cleaned Sites and a Buffered WGS84 Bounding Box for a Tier
 - [`get_benthic_cover()`](https://reefcloud.github.io/reefcloudreporting/reference/get_benthic_cover.md)
