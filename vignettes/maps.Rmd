@@ -101,7 +101,7 @@ purrr::iwalk(maps, function(map, place_name) {
 
 <figure style="text-align: center">
   <img src="figures/Palau.png" width="80%">
-  <figcaption>Figure 1: Example map showing the spatial distribution of monitoring data in Palau. </figcaption>
+  <figcaption>Figure 1: Example map showing the spatial distribution of monitoring locations in Palau. </figcaption>
 </figure>
 
 <figure style="text-align: center">
