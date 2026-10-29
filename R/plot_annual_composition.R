@@ -155,7 +155,7 @@ plot_annual_composition <- function(
   year_label <- if (year_min == year_max) {
     paste0(year_min)
   } else {
-    paste0(year_min, "–", year_max)
+    paste0(year_min, "-", year_max)
   }
 
   # ---- Set fill ordering ----
