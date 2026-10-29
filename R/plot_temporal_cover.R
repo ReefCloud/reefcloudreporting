@@ -68,6 +68,7 @@ plot_temporal_cover <- function(
         ymax = .data$high
       ),
       colour = group.pal[[cover_type]],
+      alpha = 0.8,
       linewidth = 0.8
     ) +
     ggplot2::geom_line(
