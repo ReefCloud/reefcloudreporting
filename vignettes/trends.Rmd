@@ -43,7 +43,7 @@ plot_trends_hc$plot
 
 # Save plot to the figure folder, creating it if needed
 dir.create("figures", showWarnings = FALSE, recursive = TRUE)
-ggsave(filename = file.path("figures", "Palau_hc_trend.png")),
+ggplot2::ggsave(filename = file.path("figures", "Palau_hc_trend.png"),
     plot = plot_trends_hc$plot,
     width = 8, height = 6, dpi = 300
   )
@@ -61,7 +61,6 @@ With the `plot_temporal_cover`, aside from the *Tier ID* field, the `cover_type`
 
 ```{r plot-trendsma, message = FALSE, warning = FALSE, eval=FALSE}
 plot_trends_ma <- plot_temporal_cover(1705, cover_type = "macroalgae")
-plot_trends_ma$plot
 
 maxma_value <- plot_trends_ma$df.sum$high |> max() |> ceiling() # identify highest max ma cover
 
@@ -71,6 +70,8 @@ plot_trends_ma_edit <- plot_trends_ma$plot +
                       colour = "red") + # add a dotted line threshold for historical maximum ma value
   ggplot2::scale_x_continuous(limits = c(2016, 2024)) + # select only 2020 to 2024 data
   ggplot2::labs(title = "Macroalgae Cover Trend for 2016 - 2024") # change title
+
+plot_trends_ma_edit
 
 # Save plot to the figure folder, creating it if needed
 dir.create("figures", showWarnings = FALSE, recursive = TRUE)
