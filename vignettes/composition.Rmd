@@ -7,4 +7,61 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-TO DO 
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Compositional data and trends can be useful discerning a more accurate assessment of overall change, since benthic cover is limited on the reefs. This means that a gain in certain benthic groups such as turf algae, is usually at the expense of another group, such as hard coral. Plotting these compositions together, allows for reporting these reef-scale changes through time.
+
+```{r setup, message = FALSE, warning = FALSE, eval=FALSE}
+# Load packages
+library(reefcloudreporting) # remotes::install_github("ReefCloud/reefcloudreporting", force = TRUE)
+library(dplyr)
+library(ggplot2)
+```
+
+## Plotting using `plot_annual_composition`
+
+The easiest way to plot annual composition data is through the `plot_annual_composition` function. The default settings allow for the plot to be created with just the *Tier ID*.
+
+```{r plot-comps, message = FALSE, warning = FALSE, eval=FALSE}
+plot_composition <- plot_annual_composition(958)
+
+# Save plot to the figure folder, creating it if needed
+dir.create("figures", showWarnings = FALSE, recursive = TRUE)
+ggplot2::ggsave(filename = file.path("figures", "Ngerchong_shallow_comp.png"),
+    plot = plot_composition$plot,
+    width = 8, height = 6, dpi = 300
+  )
+```
+
+## Defining `plot_annual_composition` to specify depths
+
+The default settings of `plot_annual_composition` is set up to produce a plot for the shallow reefs, since there are various levels at which the data is defined. These can be identified and then set up so that the function works for other compositions as well. At a regional level above sites, benthic composition data is often not attributed to depths. This can lead to errors if using `plot_annual_composition` directly.
+
+```{r plot-comps2, message = FALSE, warning = FALSE, eval=FALSE}
+koror_benthic_cover <- get_benthic_cover(1874)
+koror_benthic_cover$depth |>  unique() # Depths are not specified so none is displayed
+
+plot_composition_koror <- plot_annual_composition(1874, depth = "none") # Specify depth so function runs and does not end with no data.
+
+# Save plot to the figure folder, creating it if needed
+dir.create("figures", showWarnings = FALSE, recursive = TRUE)
+ggplot2::ggsave(filename = file.path("figures", "Koror_comp.png"),
+    plot = plot_composition_koror$plot,
+    width = 8, height = 6, dpi = 300
+  )
+```
+
+## Beyond `plot_annual_composition`
+
+How to make custom plots...
+
+```{r plot-comps3, message = FALSE, warning = FALSE, eval=FALSE}
+
+
+```
+

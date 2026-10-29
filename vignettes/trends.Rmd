@@ -32,7 +32,6 @@ all_benthic_cover <- get_benthic_cover(1705)
 head(all_benthic_cover)
 ```
 
-
 ## Plotting using `plot_temporal_cover`
 
 The easiest way to access the `Hard Coral` cover plot by year is through the `plot_temporal_trends` function. The default settings allow for the plot to be created with just the *Tier ID*.

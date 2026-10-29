@@ -32,6 +32,8 @@ navbar:
         href: articles/select_area.html
       - text: Create maps
         href: articles/maps.html
+      - text: Explore site cover
+        href: articles/sites.html
       - text: Explore temporal trends
         href: articles/trends.html
       - text: Explore community composition
