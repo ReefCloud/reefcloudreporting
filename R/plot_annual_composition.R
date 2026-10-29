@@ -193,17 +193,6 @@ plot_annual_composition <- function(
     plot <- plot + ggplot2::coord_flip()
   }
 
-  # ---- Save plot ----
-  ggplot2::ggsave(plot,
-                  filename = paste0("figures/", "YearComposition_",
-                                    info$region_name,
-                                    stringr:: str_to_title(depth),
-                                    stringr::str_to_title(year_label),
-                                    ".png"),
-                  bg = "transparent", width = 12, height = 8
-  )
-
-
   # ---- Return ----
   return(list(
     plot = plot,
